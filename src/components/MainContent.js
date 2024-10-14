@@ -1,13 +1,7 @@
 import React from "react";
+import ReactJson from "react-json-view";
 
 const MainContent = ({ selectedItem }) => {
-  const staticData = {
-    description: "Endpoint to verify Aadhaar QR and extract details.",
-    authorization: "Bearer Token",
-    requestBody: [{ key: "qr_text", value: "Aadhaar QR code text" }],
-    endpointBaseUrl: "https://kyc-api.surepass.io/api/v1",
-  };
-
   if (!selectedItem) {
     return (
       <div className="flex-1 p-8">
@@ -15,6 +9,69 @@ const MainContent = ({ selectedItem }) => {
       </div>
     );
   }
+
+  const staticData = {
+    description: "Endpoint to verify Aadhaar QR and extract details.",
+    authorization: "Bearer Token",
+    requestBody: [{ key: "qr_text", value: "Aadhaar QR code text" }],
+    endpointBaseUrl: "https://kyc-api.surepass.io/api/v1",
+  };
+
+  const requestExample = selectedItem.requestExample || {};
+  const curlRequest = `
+curl --location '${staticData.endpointBaseUrl}${selectedItem.endpoint}' \\
+${
+  Object.entries(requestExample).length > 0
+    ? Object.entries(requestExample)
+        .map(([key, value]) => {
+          const isFileUpload = key === "file";
+          return isFileUpload
+            ? `--form '${key}=@"/path/to/file"'`
+            : `--form '${key}="${value || ""}"'`;
+        })
+        .join(" \\\n")
+    : ""
+}
+  `;
+
+  const formatCurlRequest = (request) => {
+    return request.split("\n").map((line, index) => {
+      return (
+        <span key={index}>
+          {line.split(" ").map((part, partIndex) => {
+            if (
+              part.startsWith("curl") ||
+              part.startsWith("--location") ||
+              part.startsWith("--form")
+            ) {
+              return (
+                <span key={partIndex} className="text-gray-500">
+                  {part}{" "}
+                </span>
+              );
+            }
+            return (
+              <span key={partIndex} style={{ color: "#a6e22e" }}>
+                {part}{" "}
+              </span>
+            );
+          })}
+          <br />
+        </span>
+      );
+    });
+  };
+
+  const responseExample = selectedItem.responseExample ? (
+    <div className="block bg-[#202020] p-4 rounded-md mb-4">
+      <ReactJson
+        src={selectedItem.responseExample}
+        theme="monokai"
+        collapsed={false}
+        style={{ fontSize: "14px" }}
+      />
+    </div>
+  ) : null;
 
   return (
     <div className="w-full flex flex-wrap">
@@ -31,11 +88,9 @@ const MainContent = ({ selectedItem }) => {
             <strong>AUTHORIZATION:</strong> {staticData.authorization}
           </p>
           <p className="text-gray-700 mb-4">Body:</p>
-          {staticData.requestBody.map((field, index) => (
-            <code key={index} className="block bg-gray-100 p-4 rounded-md mb-4">
-              {`${field.key} = ${field.value}`}
-            </code>
-          ))}
+          <div className="block bg-gray-100 p-4 rounded-md mb-4">
+            {formatCurlRequest(curlRequest)}
+          </div>
         </div>
       </div>
       <div className="w-[49%] bg-[#303030] p-6 flex flex-col gap-6">
@@ -43,13 +98,19 @@ const MainContent = ({ selectedItem }) => {
           <div className="mb-3">
             <h5 className="font-semibold text-white">Example Request</h5>
           </div>
-          <div className="bg-[#202020] w-full h-[180px] rounded"></div>
+          <div className="bg-[#202020] w-full h-auto min-h-[180px] rounded overflow-auto">
+            <code className="block p-4 text-white">
+              {formatCurlRequest(curlRequest)} {/* Format cURL request here */}
+            </code>
+          </div>
         </div>
         <div>
           <div className="mb-3">
             <h5 className="font-semibold text-white">Example Response</h5>
           </div>
-          <div className="bg-[#202020] w-full h-auto min-h-[200px] rounded"></div>
+          <div className="bg-[#202020] w-full h-auto min-h-[200px] rounded overflow-auto">
+            {responseExample}
+          </div>
         </div>
       </div>
     </div>
