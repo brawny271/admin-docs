@@ -2,414 +2,270 @@ const apiFolders = {
   title: "SUREPASS API",
   folders: [
     {
+      name: "PAN",
+      subfolders: [
+        {
+          name: "PAN Verification",
+          endpoint: "/pan/verification",
+          method: "POST",
+          requestExample: {
+            product_code: "API0001",
+            trans_id: "BV576862_1234567890",
+            pan_no: "ASXXXXX75J",
+          },
+          responseExample: {
+            trans_id: "BV576862_1234567890",
+            status: "success",
+            message: "pan verification successful",
+            pan_no: "ASXXXXX75J",
+            fullname: "BHUSHAN RAGHUNATH VISHE",
+            category: "person",
+            pan_status: "valid",
+            upstream_rrn: "pan_OhMyzrRngvjfghpSuiZZ",
+          },
+        },
+        {
+          name: "PAN Comprehensive",
+          endpoint: "/pan/comprehensive",
+          method: "POST",
+          requestExample: {
+            product_code: "API0002",
+            trans_id: "BV576862_1234567891",
+            pan_no: "ASXXXXX75J",
+          },
+          responseExample: {
+            trans_id: "BV576862_1234567891",
+            status: "success",
+            message: "pan verification successful",
+            pan_no: "ASXXXXX75J",
+            firstname: "BHUSHAN",
+            middlename: "RAGHUNATH",
+            lastname: "VISHE",
+            fullname: "BHUSHAN RAGHUNATH VISHE",
+            dob: "1992-06-06",
+            pan_status: "valid",
+            pan_status_code: "E",
+            gender: "M",
+            email: "bhushanrvishe@gmail.com",
+            phone_number: "8975168703",
+            aadhaar_link_status: true,
+            masked_aadhaar: "XXXXXXXX5582",
+            address: {
+              line1: "H.No. 84",
+              line2: "Near Hanuman Mandir",
+              street: "at-post:Pashane,Tal:Karjat",
+              state: "MAHARASHTRA",
+              city: "RAIGARH(MH)",
+              pincode: "410201",
+              country: "INDIA",
+              full_address:
+                "H.No. 84 Near Hanuman Mandir at-post:Pashane,Tal:Karjat 410201 RAIGARH(MH) MAHARASHTRA INDIA",
+            },
+            upstream_rrn: "pan_comprehensive_ahrTLLAbeRaJXpdrdSvy",
+            category: "person",
+          },
+        },
+      ],
+    },
+    {
       name: "Aadhaar",
       subfolders: [
         {
-          name: "Upload QR",
-          endpoint: "/aadhaar/upload/qr",
+          name: "AADHAAR Generate Otp",
+          endpoint: "/aadhaar/generate-otp",
           method: "POST",
           requestExample: {
-            qr_text: "Aadhaar QR code text",
+            product_code: "API0003",
+            trans_id: "BV576862_1234567891",
+            aadhaar_no: "XXXXXXXX5582",
           },
           responseExample: {
+            trans_id: "BV576862_1234567891",
+            aadhaar_no: "XXXXXXXX5582",
             status: "success",
-            data: {
-              name: "John Doe",
-              aadhaar_number: "1234-5678-9123",
-            },
+            message: "otp sent on aadhaar registered mobile number",
+            is_otp_sent: true,
+            otp_reference_no: "aadhaar_v2_YxfeokIhjlucpWooNbpr",
           },
         },
         {
-          name: "Upload XML",
-          endpoint: "/aadhaar/upload/xml",
+          name: "AADHAAR Validate Otp",
+          endpoint: "/aadhaar/validate-otp",
           method: "POST",
           requestExample: {
-            xml_file: "base64_encoded_xml",
+            product_code: "API0004",
+            trans_id: "BV576862_1234567892",
+            otp_reference_no: "aadhaar_v2_YxfeokIhjlucpWooNbpr",
+            otp: "745618",
           },
           responseExample: {
-            status: "success",
             data: {
-              name: "John Doe",
-              aadhaar_number: "1234-5678-9123",
+              client_id: "aadhaar_v2_YxfeokIhjlucpWooNbpr",
+              full_name: "Bhushan Raghunath Vishe",
+              aadhaar_number: "XXXXXXXXXXXX",
+              dob: "1992-06-06",
+              gender: "M",
+              address: {
+                country: "India",
+                dist: "Raigarh",
+                state: "Maharashtra",
+                po: "Manivali",
+                loc: "Pashane",
+                vtc: "Pashane",
+                subdist: "Karjat",
+                street: "",
+                house: "House No. 84",
+                landmark: "Near Hanuman Mandir",
+              },
+              face_status: false,
+              face_score: -1,
+              zip: "410101",
+              profile_image: "base64 image",
+              has_image: true,
+              email_hash:
+                "087fa3a9c8760b444fa87dd3df69eafc9f6e4c36eb64105cb7224783ad515903",
+              mobile_hash:
+                "f216eafdc7707ddff74366e8c1965a114d92ccc5a43aa04a7439f1556eb5ca4f",
+              raw_xml: "xml url",
+              zip_data: "zip kyc data folder url",
+              care_of: null,
+              share_code: "3990",
+              mobile_verified: false,
+              reference_id: "558220241010185833327",
+              aadhaar_pdf: null,
+              status: "success_aadhaar",
+              uniqueness_id:
+                "c26d044ec7ba81e9e37792af70c523c0ab3b0d5d02048f20b5be811aec166d31",
             },
+            trans_id: "BV576862_1234567892",
+            status: "success",
+            message: "aadhaar submit otp verified successfully",
+            upstream_rrn: "aadhaar_v2_YxfeokIhjlucpWooNbpr",
           },
         },
         {
-          name: "QR Status",
-          subfolders: [
-            {
-              name: "Check QR Status",
-              endpoint: "/aadhaar/qr/status",
-              method: "GET",
-              requestExample: null,
-              responseExample: {
-                status: "pending",
-                message: "Aadhaar QR verification is still in progress.",
-              },
-            },
-            {
-              name: "Cancel QR",
-              endpoint: "/aadhaar/qr/cancel",
-              method: "DELETE",
-              requestExample: {
-                qr_id: "123456789",
-              },
-              responseExample: {
-                status: "success",
-                message: "QR verification canceled.",
-              },
-            },
-          ],
+          name: "AADHAAR Basic Verification",
+          endpoint: "/aadhaar/verification",
+          method: "POST",
+          requestExample: {
+            product_code: "API0005",
+            trans_id: "BV576862_1234567893",
+            aadhaar_no: "712489735582",
+          },
+          responseExample: {
+            trans_id: "BV576862_1234567893",
+            status: "success",
+            message: "aadhaar verification successful",
+            upstream_rrn: "aadhaar_validation_obcwQfxHqblhBhxwqnrT",
+            aadhaar_no: "712489735582",
+            aadhaar_status: "valid",
+            age_range: "30-40",
+            gender: "M",
+            is_mobile_linked: true,
+            mobile_last_digits: "380",
+            state: "Maharashtra",
+          },
         },
       ],
     },
     {
-      name: "RC",
+      name: "Bank",
       subfolders: [
         {
-          name: "Upload RC",
-          endpoint: "/rc/upload",
+          name: "Bank Account",
+          endpoint: "/bank/account",
           method: "POST",
           requestExample: {
-            rc_image: "base64_encoded_rc_image",
-          },
-          responseExample: {
-            status: "success",
-            data: {
-              registration_number: "MH12AB1234",
-              owner_name: "John Doe",
-            },
-          },
-        },
-        {
-          name: "RC Status",
-          subfolders: [
-            {
-              name: "Check RC Status",
-              endpoint: "/rc/status",
-              method: "GET",
-              requestExample: null,
-              responseExample: {
-                status: "verified",
-                message: "RC verification completed successfully.",
-              },
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: "FasTag",
-      subfolders: [
-        {
-          name: "Upload FasTag",
-          endpoint: "/fastag/upload",
-          method: "POST",
-          requestExample: {
-            fastag_image: "base64_encoded_fastag_image",
-          },
-          responseExample: {
-            status: "success",
-            data: {
-              vehicle_number: "MH12AB1234",
-              fastag_id: "FT123456789",
-            },
-          },
-        },
-        {
-          name: "FasTag Status",
-          subfolders: [
-            {
-              name: "Check FasTag Status",
-              endpoint: "/fastag/status",
-              method: "GET",
-              requestExample: null,
-              responseExample: {
-                status: "verified",
-                message: "FasTag verification completed.",
-              },
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: "Bank Verification",
-      subfolders: [
-        {
-          name: "Verify Bank Account",
-          endpoint: "/bank/verify",
-          method: "POST",
-          requestExample: {
-            account_number: "1234567890",
+            product_code: "API0006",
+            trans_id: "BV576862_1234567894",
+            bank_account_no: "1234567890",
             ifsc_code: "SBIN0001234",
           },
           responseExample: {
+            trans_id: "BV576862_1234567894",
             status: "success",
-            data: {
-              account_holder_name: "John Doe",
-              bank_name: "State Bank of India",
-            },
+            message: "bank account verification successful",
+            account_holder_name: "John Doe",
+            bank_name: "State Bank of India",
           },
         },
         {
-          name: "Statement Analysis",
-          endpoint: "/bank/statement/analyze",
+          name: "Bank Account Penny Drop",
+          endpoint: "/bank/penny-drop",
           method: "POST",
           requestExample: {
-            statement_file: "base64_encoded_statement_pdf",
+            product_code: "API0007",
+            trans_id: "BV576862_1234567895",
+            bank_account_no: "1234567890",
+            ifsc_code: "SBIN0001234",
           },
           responseExample: {
+            trans_id: "BV576862_1234567895",
             status: "success",
-            data: {
-              summary: {
-                total_credits: "₹50000",
-                total_debits: "₹30000",
-                balance: "₹20000",
-              },
-            },
+            message: "Penny drop successful",
+            transaction_id: "TRX1234567890",
           },
-        },
-        {
-          name: "Account Balance",
-          subfolders: [
-            {
-              name: "Get Balance",
-              endpoint: "/bank/balance",
-              method: "GET",
-              requestExample: null,
-              responseExample: {
-                status: "success",
-                data: {
-                  balance: "₹20000",
-                },
-              },
-            },
-          ],
         },
       ],
     },
     {
-      name: "Voter ID",
+      name: "GST",
       subfolders: [
         {
-          name: "Verify Voter ID",
-          endpoint: "/voterid/verify",
+          name: "Basic GST",
+          endpoint: "/gst/basic",
           method: "POST",
           requestExample: {
-            voter_id: "ABCDE12345",
+            product_code: "API0006",
+            trans_id: "BV576862_1234567894",
+            gstin: "27AXXXXXXX8M1ZP",
           },
           responseExample: {
+            trans_id: "BV576862_1234567894",
             status: "success",
-            data: {
-              name: "John Doe",
-              voter_id: "ABCDE12345",
-            },
+            message: "GST verification successful",
+            gstin: "27AXXXXXXX8M1ZP",
+            gstin_status: "valid",
+            registration_date: "2023-09-08",
+            registration_type: "Private Limited Company",
+            registration_name: "REGISTER NAME OF COMPANY",
+            nature_of_business_activities:
+              "Office / Sale Office|Retail Business|Supplier of Services|Works Contract",
+            e_invoicing_status: "NO",
+            legal_name_of_business: "LEGAL NAME OF COMPANY",
+            constitution_of_business: "Private Limited Company",
+            centre_jurisdiction:
+              "State - CBIC,Zone - MUMBAI,Commissionerate - BHIWANDI,Division - DIVISION IV,Range - RANGE-I (Jurisdiction)",
+            error: {},
           },
         },
         {
-          name: "Voter ID Status",
-          subfolders: [
-            {
-              name: "Check Voter ID Status",
-              endpoint: "/voterid/status",
-              method: "GET",
-              requestExample: null,
-              responseExample: {
-                status: "verified",
-                message: "Voter ID verification completed.",
-              },
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: "Driving License",
-      subfolders: [
-        {
-          name: "Verify License",
-          endpoint: "/drivinglicense/verify",
+          name: "Comprehensive GST",
+          endpoint: "/gst/comprehensive",
           method: "POST",
           requestExample: {
-            license_number: "DL1234567890",
+            product_code: "API0007",
+            trans_id: "BV576862_1234567895",
+            gstin: "27AXXXXXXX8M1ZP",
           },
           responseExample: {
+            trans_id: "BV576862_1234567895",
             status: "success",
-            data: {
-              name: "John Doe",
-              license_number: "DL1234567890",
-            },
+            message: "GST verification successful",
+            gstin: "27AXXXXXXX8M1ZP",
+            gstin_status: "valid",
+            registration_date: "2023-09-08",
+            registration_type: "Private Limited Company",
+            registration_name: "REGISTER NAME OF COMPANY",
+            nature_of_business_activities:
+              "Office / Sale Office|Retail Business|Supplier of Services|Works Contract",
+            e_invoicing_status: "NO",
+            legal_name_of_business: "LEGAL NAME OF COMPANY",
+            constitution_of_business: "Private Limited Company",
+            centre_jurisdiction:
+              "State - CBIC,Zone - MUMBAI,Commissionerate - BHIWANDI,Division - DIVISION IV,Range - RANGE-I (Jurisdiction)",
+            error: {},
           },
-        },
-        {
-          name: "License Status",
-          subfolders: [
-            {
-              name: "Check License Status",
-              endpoint: "/drivinglicense/status",
-              method: "GET",
-              requestExample: null,
-              responseExample: {
-                status: "verified",
-                message: "Driving License verification completed.",
-              },
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: "Passport",
-      subfolders: [
-        {
-          name: "Verify Passport",
-          endpoint: "/passport/verify",
-          method: "POST",
-          requestExample: {
-            passport_number: "M1234567",
-          },
-          responseExample: {
-            status: "success",
-            data: {
-              name: "John Doe",
-              passport_number: "M1234567",
-            },
-          },
-        },
-        {
-          name: "Passport Status",
-          subfolders: [
-            {
-              name: "Check Passport Status",
-              endpoint: "/passport/status",
-              method: "GET",
-              requestExample: null,
-              responseExample: {
-                status: "verified",
-                message: "Passport verification completed.",
-              },
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: "Corporate",
-      subfolders: [
-        {
-          name: "Verify GSTIN",
-          endpoint: "/corporate/gstin/verify",
-          method: "POST",
-          requestExample: {
-            gstin: "22AAAAA0000A1Z5",
-          },
-          responseExample: {
-            status: "success",
-            data: {
-              company_name: "ABC Pvt Ltd",
-              gstin: "22AAAAA0000A1Z5",
-            },
-          },
-        },
-        {
-          name: "Verify Company",
-          endpoint: "/corporate/company/verify",
-          method: "POST",
-          requestExample: {
-            company_name: "ABC Pvt Ltd",
-            cin: "L12345MH2000PLC123456",
-          },
-          responseExample: {
-            status: "success",
-            data: {
-              company_name: "ABC Pvt Ltd",
-              cin: "L12345MH2000PLC123456",
-              status: "Active",
-            },
-          },
-        },
-        {
-          name: "Corporate Status",
-          subfolders: [
-            {
-              name: "Check Corporate Status",
-              endpoint: "/corporate/status",
-              method: "GET",
-              requestExample: null,
-              responseExample: {
-                status: "active",
-                message: "Corporate verification completed.",
-              },
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: "Face",
-      subfolders: [
-        {
-          name: "Face Match",
-          endpoint: "/face/match",
-          method: "POST",
-          requestExample: {
-            image1: "base64_encoded_image1",
-            image2: "base64_encoded_image2",
-          },
-          responseExample: {
-            status: "success",
-            match: true,
-            confidence: 98.5,
-          },
-        },
-        {
-          name: "Face Recognition Status",
-          subfolders: [
-            {
-              name: "Check Face Recognition Status",
-              endpoint: "/face/recognition/status",
-              method: "GET",
-              requestExample: null,
-              responseExample: {
-                status: "completed",
-                match: true,
-                confidence: 98.5,
-              },
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: "OCR",
-      subfolders: [
-        {
-          name: "Document OCR",
-          endpoint: "/ocr/document",
-          method: "POST",
-          requestExample: {
-            document_image: "base64_encoded_image",
-          },
-          responseExample: {
-            status: "success",
-            extracted_text: "Sample extracted text from document.",
-          },
-        },
-        {
-          name: "OCR Status",
-          subfolders: [
-            {
-              name: "Check OCR Status",
-              endpoint: "/ocr/status",
-              method: "GET",
-              requestExample: null,
-              responseExample: {
-                status: "completed",
-                extracted_text: "Sample extracted text.",
-              },
-            },
-          ],
         },
       ],
     },

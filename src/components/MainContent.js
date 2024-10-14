@@ -1,154 +1,201 @@
-import React from "react";
+import { Copy, CopyCheck } from "lucide-react";
+import React, { useState } from "react";
 import ReactJson from "react-json-view";
+import { Route, Routes } from "react-router-dom";
 
 const MainContent = ({ selectedItem }) => {
-  if (!selectedItem) {
-    return (
-      <div className="flex-1 p-8">
-        Select an API from the sidebar to view details.
-      </div>
-    );
-  }
+  const [isCopied, setIsCopied] = useState(false);
+  const [isEndpointCopied, setIsEndpointCopied] = useState(false); // New state for endpoint copy
 
-  const staticData = {
-    description: "Endpoint to verify Aadhaar QR and extract details.",
-    authorization: "Bearer Token",
-    endpointBaseUrl: "https://kyc-api.surepass.io/api/v1",
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(curlRequest).then(
+      () => {
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000);
+      },
+      (err) => {
+        console.error("Could not copy text: ", err);
+      }
+    );
   };
 
-  const requestExample = selectedItem.requestExample || {};
+  const copyEndpointToClipboard = () => {
+    const endpointUrl = `${endpointBaseUrl}${selectedItem.endpoint}`;
+    navigator.clipboard.writeText(endpointUrl).then(
+      () => {
+        setIsEndpointCopied(true);
+        setTimeout(() => setIsEndpointCopied(false), 2000);
+      },
+      (err) => {
+        console.error("Could not copy endpoint: ", err);
+      }
+    );
+  };
 
-  const curlRequest = `
-curl --location '${staticData.endpointBaseUrl}${selectedItem.endpoint}' \\
-${
-  Object.entries(requestExample).length > 0
-    ? Object.entries(requestExample)
-        .map(([key, value]) => {
-          const isFileUpload = key === "file";
-          return isFileUpload
+  const endpointBaseUrl = "https://kyc-api.surepass.io/api/v1";
+  const curlRequest = selectedItem
+    ? `curl --location '${endpointBaseUrl}${
+        selectedItem.endpoint
+      }' \\\n${Object.entries(selectedItem.requestExample || {})
+        .map(([key, value]) =>
+          key === "file"
             ? `--form '${key}=@"/path/to/file"'`
-            : `--form '${key}="${value || ""}"'`;
-        })
-        .join(" \\\n")
-    : ""
-}
-  `;
+            : `--form '${key}="${value || ""}"'`
+        )
+        .join(" \\\n")}`
+    : "";
 
-  const formatCurlRequest = (request) => {
-    return request.split("\n").map((line, index) => {
+  const formatRequestBody = () => {
+    if (selectedItem?.method === "GET") {
       return (
-        <span key={index}>
-          {line.split(" ").map((part, partIndex) => {
-            if (
-              part.startsWith("curl") ||
-              part.startsWith("--location") ||
-              part.startsWith("--form")
-            ) {
-              return (
-                <span key={partIndex} className="text-gray-500">
-                  {part}{" "}
-                </span>
-              );
-            }
-            return (
-              <span key={partIndex} style={{ color: "#a6e22e" }}>
-                {part}{" "}
-              </span>
-            );
-          })}
-          <br />
-        </span>
+        <pre className="bg-gray-100 p-4 rounded-md mb-4">
+          <code className="text-orange-600 font-thin text-[14px]">
+            {JSON.stringify({ user_id: "user_id" }, null, 2)}
+          </code>
+        </pre>
       );
-    });
+    }
+    if (selectedItem && Object.keys(selectedItem.requestExample).length > 0) {
+      return (
+        <pre className="bg-gray-100 p-4 rounded-md mb-4">
+          <code className="text-orange-600 font-thin text-[14px]">
+            {JSON.stringify(selectedItem.requestExample, null, 2)}
+          </code>
+        </pre>
+      );
+    }
+    return null;
   };
-
-  const formatRequestBody = (body) => {
-    return (
-      <pre className="bg-gray-100 p-4 rounded-md mb-4">
-        <code className="text-orange-600 font-thin text-[14px]">
-          {JSON.stringify(body, null, 2)}
-        </code>
-      </pre>
-    );
-  };
-
-  const formatGetParameters = (params) => {
-    return (
-      <pre className="bg-gray-100 p-4 rounded-md mb-4">
-        <code className="text-orange-600 font-thin text-[14px]">
-          {Object.entries(params)
-            .map(([key, value]) => `${key}=${value}`)
-            .join("&")}
-        </code>
-      </pre>
-    );
-  };
-
-  const getBodyWithUserId = (userId) => {
-    return (
-      <pre className="bg-gray-100 p-4 rounded-md mb-4">
-        <code className="text-orange-600 font-thin text-[14px]">
-          {JSON.stringify({ user_id: userId }, null, 2)}
-        </code>
-      </pre>
-    );
-  };
-
-  const responseExample = selectedItem.responseExample ? (
-    <div className="block bg-[#202020] p-4 rounded-md mb-4">
-      <ReactJson
-        src={selectedItem.responseExample}
-        theme="monokai"
-        collapsed={false}
-        style={{ fontSize: "14px" }}
-      />
-    </div>
-  ) : null;
 
   return (
-    <div className="w-full flex flex-wrap">
-      <div className="flex-1 p-8 bg-white w-[49%]">
-        <div className="mb-8">
-          <h3 className="text-2xl font-bold mb-4">
-            {selectedItem.method} {selectedItem.name}
-          </h3>
-          <p className="text-gray-700 mb-4">{staticData.description}</p>
-          <code className="block bg-gray-100 p-4 rounded-md mb-4">
-            {`${staticData.endpointBaseUrl}${selectedItem.endpoint}`}
-          </code>
-          <p className="text-gray-700 mb-4">
-            <strong>AUTHORIZATION:</strong> {staticData.authorization}
-          </p>
-          <p className="text-gray-700 mb-4">Body:</p>
-          {selectedItem.method === "GET" ? (
-            <>{getBodyWithUserId("user_id")}</>
-          ) : (
-            Object.keys(requestExample).length > 0 &&
-            formatRequestBody(requestExample)
-          )}
+    <>
+      {!selectedItem ? (
+        <div className="flex-1 p-8">
+          <Routes>
+            <Route
+              path="/introduction"
+              element={<div>Introduction Content</div>}
+            />
+            <Route
+              path="/getting-started"
+              element={<div>Getting Started Content</div>}
+            />
+            <Route path="/endpoints" element={<div>Endpoints Content</div>} />
+            <Route
+              path="/authentication"
+              element={<div>Authentication Content</div>}
+            />
+            <Route
+              path="/errors-status-codes"
+              element={<div>Errors and Status Codes Content</div>}
+            />
+            <Route
+              path="/rate-limits"
+              element={<div>Rate Limits Content</div>}
+            />
+          </Routes>
         </div>
-      </div>
-      <div className="w-[49%] bg-[#303030] p-6 flex flex-col gap-6">
-        <div>
-          <div className="mb-3">
-            <h5 className="font-semibold text-white">Example Request</h5>
+      ) : (
+        <div className="w-full flex flex-wrap">
+          <div className="flex-1 p-8 bg-white w-[49%]">
+            <div className="mb-8">
+              <h3 className="text-[18px] font-semibold mb-4">
+                <span className="font-semibold text-[18px] mr-3 text-orange-300">
+                  {selectedItem.method}
+                </span>
+                {selectedItem.name}
+              </h3>
+              <p className="text-gray-700 text-[16px] font-medium mb-4">
+                Endpoint to verify Aadhaar QR and extract details.
+              </p>
+              <div className="flex justify-between items-center">
+                <code className="block bg-gray-100 p-4 rounded-md mb-4">
+                  {`${endpointBaseUrl}${selectedItem.endpoint}`}
+                </code>
+                <button
+                  onClick={copyEndpointToClipboard}
+                  className="text-blue-500 hover:underline"
+                >
+                  {isEndpointCopied ? "Copied!" : "Copy"}
+                </button>
+              </div>
+              <p className="text-[14px] text-gray-700 font-medium mb-4">
+                <span className="font-semibold text-black text-[18px] mr-3">
+                  AUTHORIZATION
+                </span>
+                Bearer Token
+              </p>
+              <p className="text-gray-600 font-medium mb-4">Body</p>
+              {formatRequestBody()}
+            </div>
           </div>
-          <div className="bg-[#202020] w-full h-auto min-h-[180px] rounded overflow-auto">
-            <code className="block p-4 text-white">
-              {formatCurlRequest(curlRequest)}
-            </code>
+          <div className="w-[49%] bg-[#303030] p-6 flex flex-col gap-6">
+            <div>
+              <div className="mb-3 flex justify-between items-center">
+                <h5 className="font-semibold text-white">Example Request</h5>
+                <button
+                  onClick={copyToClipboard}
+                  className="flex items-center text-blue-400 hover:underline"
+                >
+                  {isCopied ? (
+                    <CopyCheck color="black" size={20} />
+                  ) : (
+                    <Copy color="white" size={20} />
+                  )}
+                </button>
+              </div>
+              <div className="bg-[#202020] w-full h-auto min-h-[180px] rounded overflow-auto">
+                <code className="block p-4 text-white">
+                  {curlRequest.split("\n").map((line, index) => (
+                    <div key={index} className="flex flex-wrap">
+                      {line.split(" ").map((part, partIndex) => {
+                        const isCommand =
+                          part.startsWith("curl") ||
+                          part.startsWith("--location") ||
+                          part.startsWith("--form");
+                        return (
+                          <span
+                            key={partIndex}
+                            className={
+                              isCommand ? "text-gray-500" : "text-green-400"
+                            }
+                            style={{ marginRight: "4px", whiteSpace: "nowrap" }}
+                          >
+                            {part}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  ))}
+                </code>
+              </div>
+            </div>
+            {selectedItem.responseExample && (
+              <div>
+                <div className="mb-3">
+                  <h5 className="font-semibold text-white">Example Response</h5>
+                </div>
+                <div
+                  className="block bg-[#202020] p-4 rounded-md mb-4 max-h-[320px] overflow-x-auto scrollbar-thin scrollbar-thumb-[#555555] scrollbar-track-[#2b2b2b]"
+                  style={{
+                    scrollbarWidth: "thin",
+                    scrollbarColor: "#555555 #2b2b2b",
+                  }}
+                >
+                  <ReactJson
+                    src={selectedItem.responseExample}
+                    theme="monokai"
+                    collapsed={false}
+                    style={{ fontSize: "14px" }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
-        <div>
-          <div className="mb-3">
-            <h5 className="font-semibold text-white">Example Response</h5>
-          </div>
-          <div className="bg-[#202020] w-full h-auto min-h-[200px] rounded overflow-auto">
-            {responseExample}
-          </div>
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
+
 export default MainContent;
