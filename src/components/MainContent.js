@@ -13,11 +13,11 @@ const MainContent = ({ selectedItem }) => {
   const staticData = {
     description: "Endpoint to verify Aadhaar QR and extract details.",
     authorization: "Bearer Token",
-    requestBody: [{ key: "qr_text", value: "Aadhaar QR code text" }],
     endpointBaseUrl: "https://kyc-api.surepass.io/api/v1",
   };
 
   const requestExample = selectedItem.requestExample || {};
+
   const curlRequest = `
 curl --location '${staticData.endpointBaseUrl}${selectedItem.endpoint}' \\
 ${
@@ -62,6 +62,38 @@ ${
     });
   };
 
+  const formatRequestBody = (body) => {
+    return (
+      <pre className="bg-gray-100 p-4 rounded-md mb-4">
+        <code className="text-orange-600 font-thin text-[14px]">
+          {JSON.stringify(body, null, 2)}
+        </code>
+      </pre>
+    );
+  };
+
+  const formatGetParameters = (params) => {
+    return (
+      <pre className="bg-gray-100 p-4 rounded-md mb-4">
+        <code className="text-orange-600 font-thin text-[14px]">
+          {Object.entries(params)
+            .map(([key, value]) => `${key}=${value}`)
+            .join("&")}
+        </code>
+      </pre>
+    );
+  };
+
+  const getBodyWithUserId = (userId) => {
+    return (
+      <pre className="bg-gray-100 p-4 rounded-md mb-4">
+        <code className="text-orange-600 font-thin text-[14px]">
+          {JSON.stringify({ user_id: userId }, null, 2)}
+        </code>
+      </pre>
+    );
+  };
+
   const responseExample = selectedItem.responseExample ? (
     <div className="block bg-[#202020] p-4 rounded-md mb-4">
       <ReactJson
@@ -88,9 +120,12 @@ ${
             <strong>AUTHORIZATION:</strong> {staticData.authorization}
           </p>
           <p className="text-gray-700 mb-4">Body:</p>
-          <div className="block bg-gray-100 p-4 rounded-md mb-4">
-            {formatCurlRequest(curlRequest)}
-          </div>
+          {selectedItem.method === "GET" ? (
+            <>{getBodyWithUserId("user_id")}</>
+          ) : (
+            Object.keys(requestExample).length > 0 &&
+            formatRequestBody(requestExample)
+          )}
         </div>
       </div>
       <div className="w-[49%] bg-[#303030] p-6 flex flex-col gap-6">
@@ -100,7 +135,7 @@ ${
           </div>
           <div className="bg-[#202020] w-full h-auto min-h-[180px] rounded overflow-auto">
             <code className="block p-4 text-white">
-              {formatCurlRequest(curlRequest)} {/* Format cURL request here */}
+              {formatCurlRequest(curlRequest)}
             </code>
           </div>
         </div>
@@ -116,5 +151,4 @@ ${
     </div>
   );
 };
-
 export default MainContent;

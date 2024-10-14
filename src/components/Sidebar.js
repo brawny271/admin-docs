@@ -13,7 +13,7 @@ const Sidebar = ({ setSelectedItem, folders }) => {
   };
 
   return (
-    <div className="w-64 bg-gray-50 border-r border-gray-200 h-[100%] p-4">
+    <div className="w-64 bg-gray-50 border-r border-gray-200 h-[100%] p-4 overflow-y-auto">
       <h2 className="text-lg font-semibold pl-1  mb-6 rounded-sm text-gray-800">
         <span className="text-blue-700">Safex</span>
         <span className="text-green-500">pay</span> API
