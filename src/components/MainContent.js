@@ -77,7 +77,7 @@ const MainContent = ({ selectedItem }) => {
     <>
       {!selectedItem ? (
         <div className="flex-1 p-8">
-          <Routes>
+          <Routes basename="/apix-docs">
             <Route path="/introduction" element={<IntroductionContent />} />
             {/* <Route path="/getting-started" element={<GettingStarted />} /> */}
             <Route path="/endpoints" element={<EndPoints />} />

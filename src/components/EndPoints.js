@@ -25,7 +25,7 @@ const EndPoints = () => {
         Production End Point
       </h4>
       <pre className="bg-gray-100 p-4 rounded-lg mb-6">
-        <code>https://uat.nyofin.com/apix-apisuit/pan/1.0/</code>
+        <code>https://uat.nyofin.com/apix-apisuit/</code>
       </pre>
       <h3 className="text-2xl font-semibold mb-3 text-gray-800">Responses</h3>
       <p className="mb-4 text-gray-700 ">

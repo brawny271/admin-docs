@@ -3,7 +3,7 @@ import "./App.css";
 import Sidebar from "./components/Sidebar";
 import MainContent from "./components/MainContent";
 import apiFolders from "./ApiFolders.js";
-import apix from "./assets/svg/apix-logo.svg";
+import apix from "./assets/images/apixlogo.png";
 
 const App = () => {
   const [selectedItem, setSelectedItem] = useState(null);
