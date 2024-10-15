@@ -7,7 +7,7 @@ const Status = () => {
       <h2 className="text-3xl font-semibold #4b8d94 mb-4 text-gray-800 underline flex flex-wrap justify-between gap-2">
         Errors and Status Codes
         <span>
-          <ShieldAlert />
+          <ShieldAlert color="#ff0000" size={30} />
         </span>
       </h2>
       <p className="mb-4 text-gray-700 ">

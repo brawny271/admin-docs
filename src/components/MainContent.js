@@ -37,7 +37,7 @@ const MainContent = ({ selectedItem }) => {
     );
   };
 
-  const endpointBaseUrl = "https://uat.nyofin.com/apix-apisuit/pan/1.0";
+  const endpointBaseUrl = "https://uat.nyofin.com/apix-apisuit";
   const curlRequest = selectedItem
     ? `curl --location '${endpointBaseUrl}${
         selectedItem.endpoint
@@ -72,13 +72,14 @@ const MainContent = ({ selectedItem }) => {
     return null;
   };
 
+  console.log(selectedItem);
   return (
     <>
       {!selectedItem ? (
         <div className="flex-1 p-8">
           <Routes>
             <Route path="/introduction" element={<IntroductionContent />} />
-            <Route path="/getting-started" element={<GettingStarted />} />
+            {/* <Route path="/getting-started" element={<GettingStarted />} /> */}
             <Route path="/endpoints" element={<EndPoints />} />
             <Route path="/authentication" element={<Authentication />} />
             <Route path="/errors-status-codes" element={<Status />} />

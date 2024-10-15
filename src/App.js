@@ -21,7 +21,7 @@ const App = () => {
           <button
             className="bg-green-600 rounded-full px-6 py-1  text-white font-medium transition ease-in-out hover:bg-green-500 hover:shadow-text-white-glow"
             onClick={() =>
-              (window.location.href = "https://portal.safexpay.com/signup")
+              (window.location.href = "https://uatui.nyofin.com/sign-up")
             }
           >
             Sign up
@@ -32,6 +32,7 @@ const App = () => {
         <Sidebar
           folders={apiFolders.folders}
           setSelectedItem={setSelectedItem}
+          selectedItem={selectedItem}
         />
         <MainContent selectedItem={selectedItem} />
       </div>

@@ -7,7 +7,7 @@ const GettingStarted = () => {
       <h2 className="text-3xl font-semibold #4b8d94 mb-4 text-gray-800 underline flex flex-wrap justify-between gap-2">
         Getting Started{" "}
         <span>
-          <BadgeInfo />
+          <BadgeInfo color="#0076f5" size={30} />
         </span>
       </h2>
       <p className="mb-3 text-gray-700 font-normal">

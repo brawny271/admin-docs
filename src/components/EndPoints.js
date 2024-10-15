@@ -4,10 +4,10 @@ import React from "react";
 const EndPoints = () => {
   return (
     <div className="p-8 bg-[#fbfbfb] shadow-md rounded-lg  mx-auto">
-      <h2 className="text-3xl font-semibold #4b8d94 mb-5 text-gray-800 underline flex flex-wrap justify-between gap-2">
+      <h2 className="text-3xl font-semibold #4b8d94 mb-4 text-gray-800 underline flex flex-wrap justify-between gap-2">
         Endpoints
         <span>
-          <Route />
+          <Route color="#ffb029" size={30} />
         </span>
       </h2>
       <p className="mb-5 text-gray-700 ">
