@@ -285,6 +285,77 @@ const apiFolders = {
             error: {},
           },
         },
+        {
+          name: "Advance GST",
+          endpoint: "/gst/advance",
+          method: "POST",
+          details:
+            "The Advance GST API provides an in-depth analysis of a GSTIN, including historical data, business turnover, return filing status, and compliance rating. This allows for a comprehensive financial view of the business.",
+          requestExample: {
+            product_code: "API0008",
+            trans_id: "BV576862_1234567896",
+            gstin: "27AXXXXXXX8M1ZP",
+          },
+          responseExample: {
+            trans_id: "BV576862_1234567896",
+            status: "success",
+            message: "Advance GST verification successful",
+            gstin: "27AXXXXXXX8M1ZP",
+            gstin_status: "valid",
+            registration_date: "2023-09-08",
+            registration_name: "REGISTER NAME OF COMPANY",
+            nature_of_business_activities:
+              "Office / Sale Office|Retail Business|Supplier of Services|Works Contract",
+            compliance_rating: "A",
+            last_return_filed_date: "2024-09-30",
+            annual_turnover: "₹2,50,00,000",
+            return_filing_status: "Filed",
+            e_invoicing_status: "NO",
+            constitution_of_business: "Private Limited Company",
+            business_address: {
+              street: "Some Street",
+              city: "Mumbai",
+              state: "Maharashtra",
+              pincode: "400001",
+            },
+            jurisdiction_details:
+              "State - CBIC,Zone - MUMBAI,Commissionerate - BHIWANDI,Division - DIVISION IV,Range - RANGE-I (Jurisdiction)",
+            error: {},
+          },
+        },
+        {
+          name: "GST by PAN",
+          endpoint: "/gst/by-pan",
+          method: "POST",
+          details:
+            "The GST by PAN API allows verification of all GST registrations associated with a specific PAN. It returns multiple GSTINs linked to the PAN and their details, including business names, states, and registration status.",
+          requestExample: {
+            product_code: "API0009",
+            trans_id: "BV576862_1234567897",
+            pan_no: "ASXXXXX75J",
+          },
+          responseExample: {
+            trans_id: "BV576862_1234567897",
+            status: "success",
+            message: "GST by PAN verification successful",
+            pan_no: "ASXXXXX75J",
+            gstin_list: [
+              {
+                gstin: "27AXXXXXXX8M1ZP",
+                registration_name: "REGISTER NAME OF COMPANY 1",
+                state: "Maharashtra",
+                gstin_status: "Active",
+              },
+              {
+                gstin: "07AXXXXXXX8M1ZA",
+                registration_name: "REGISTER NAME OF COMPANY 2",
+                state: "Delhi",
+                gstin_status: "Inactive",
+              },
+            ],
+            error: {},
+          },
+        },
       ],
     },
   ],

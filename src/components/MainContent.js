@@ -2,6 +2,11 @@ import { Copy, CopyCheck } from "lucide-react";
 import React, { useState } from "react";
 import ReactJson from "react-json-view";
 import { Route, Routes } from "react-router-dom";
+import IntroductionContent from "./IntroductionContent";
+import GettingStarted from "./GettingStarted";
+import EndPoints from "./EndPoints";
+import Authentication from "./Authentication";
+import Status from "./Status";
 
 const MainContent = ({ selectedItem }) => {
   const [isCopied, setIsCopied] = useState(false);
@@ -32,7 +37,7 @@ const MainContent = ({ selectedItem }) => {
     );
   };
 
-  const endpointBaseUrl = "https://kyc-api.surepass.io/api/v1";
+  const endpointBaseUrl = "https://uat.nyofin.com/apix-apisuit/pan/1.0";
   const curlRequest = selectedItem
     ? `curl --location '${endpointBaseUrl}${
         selectedItem.endpoint
@@ -72,23 +77,11 @@ const MainContent = ({ selectedItem }) => {
       {!selectedItem ? (
         <div className="flex-1 p-8">
           <Routes>
-            <Route
-              path="/introduction"
-              element={<div>Introduction Content</div>}
-            />
-            <Route
-              path="/getting-started"
-              element={<div>Getting Started Content</div>}
-            />
-            <Route path="/endpoints" element={<div>Endpoints Content</div>} />
-            <Route
-              path="/authentication"
-              element={<div>Authentication Content</div>}
-            />
-            <Route
-              path="/errors-status-codes"
-              element={<div>Errors and Status Codes Content</div>}
-            />
+            <Route path="/introduction" element={<IntroductionContent />} />
+            <Route path="/getting-started" element={<GettingStarted />} />
+            <Route path="/endpoints" element={<EndPoints />} />
+            <Route path="/authentication" element={<Authentication />} />
+            <Route path="/errors-status-codes" element={<Status />} />
             <Route
               path="/rate-limits"
               element={<div>Rate Limits Content</div>}
@@ -199,6 +192,7 @@ const MainContent = ({ selectedItem }) => {
                     theme="monokai"
                     collapsed={false}
                     style={{ fontSize: "14px" }}
+                    name={false}
                   />
                 </div>
               </div>

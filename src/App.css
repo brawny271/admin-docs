@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: #e2e8f0;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #b8b8b8;
+  border-radius: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #3b6f74; /* Darker shade on hover */
+}

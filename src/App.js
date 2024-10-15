@@ -18,7 +18,12 @@ const App = () => {
           </span>
         </div>
         <div className="pr-4">
-          <button className="bg-green-600 rounded-full px-6 py-1  text-white font-medium transition ease-in-out hover:bg-green-500 hover:shadow-text-white-glow">
+          <button
+            className="bg-green-600 rounded-full px-6 py-1  text-white font-medium transition ease-in-out hover:bg-green-500 hover:shadow-text-white-glow"
+            onClick={() =>
+              (window.location.href = "https://portal.safexpay.com/signup")
+            }
+          >
             Sign up
           </button>
         </div>
