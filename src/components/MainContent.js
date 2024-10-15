@@ -5,7 +5,7 @@ import { Route, Routes } from "react-router-dom";
 
 const MainContent = ({ selectedItem }) => {
   const [isCopied, setIsCopied] = useState(false);
-  const [isEndpointCopied, setIsEndpointCopied] = useState(false); // New state for endpoint copy
+  const [isEndpointCopied, setIsEndpointCopied] = useState(false);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(curlRequest).then(
@@ -98,35 +98,46 @@ const MainContent = ({ selectedItem }) => {
       ) : (
         <div className="w-full flex flex-wrap">
           <div className="flex-1 p-8 bg-white w-[49%]">
-            <div className="mb-8">
-              <h3 className="text-[18px] font-semibold mb-4">
-                <span className="font-semibold text-[18px] mr-3 text-orange-300">
+            <div className="mb-6">
+              <h3 className="text-[18px] font-semibold mb-4 underline">
+                <span className="font-semibold text-[18px] mr-3 text-[#ad7a03]">
                   {selectedItem.method}
                 </span>
                 {selectedItem.name}
               </h3>
-              <p className="text-gray-700 text-[16px] font-medium mb-4">
+              <p className="text-[16px] text-[#a6a6a6] font-normal mb-4">
                 Endpoint to verify Aadhaar QR and extract details.
               </p>
-              <div className="flex justify-between items-center">
-                <code className="block bg-gray-100 p-4 rounded-md mb-4">
+              <div className="flex justify-between items-center bg-gray-100 rounded mb-6">
+                <code className="block bg-gray-100 p-4 rounded-md">
                   {`${endpointBaseUrl}${selectedItem.endpoint}`}
                 </code>
                 <button
                   onClick={copyEndpointToClipboard}
-                  className="text-blue-500 hover:underline"
+                  className="text-blue-500 hover:underline pr-2"
+                  title="Copy To Clipboard"
                 >
-                  {isEndpointCopied ? "Copied!" : "Copy"}
+                  {isEndpointCopied ? (
+                    <CopyCheck color="black" size={20} />
+                  ) : (
+                    <Copy color="black" size={20} />
+                  )}
                 </button>
               </div>
-              <p className="text-[14px] text-gray-700 font-medium mb-4">
-                <span className="font-semibold text-black text-[18px] mr-3">
+              <p className="text-[16px] text-[#a6a6a6] font-normal mb-1">
+                <span className="font-semibold text-black text-[18px] mr-3 underline">
                   AUTHORIZATION
                 </span>
                 Bearer Token
               </p>
-              <p className="text-gray-600 font-medium mb-4">Body</p>
+              <p className=" font-medium mb-4">Body</p>
               {formatRequestBody()}
+            </div>
+            <div>
+              <h3 className="font-semibold text-[18px] underline mb-2">
+                Details
+              </h3>
+              <p className="text-gray-500">{selectedItem?.details}</p>
             </div>
           </div>
           <div className="w-[49%] bg-[#303030] p-6 flex flex-col gap-6">
@@ -136,6 +147,7 @@ const MainContent = ({ selectedItem }) => {
                 <button
                   onClick={copyToClipboard}
                   className="flex items-center text-blue-400 hover:underline"
+                  title="Copy To Clipboard"
                 >
                   {isCopied ? (
                     <CopyCheck color="black" size={20} />

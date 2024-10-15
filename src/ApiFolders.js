@@ -1,5 +1,5 @@
 const apiFolders = {
-  title: "SUREPASS API",
+  title: "APIX API",
   folders: [
     {
       name: "PAN",
@@ -8,6 +8,8 @@ const apiFolders = {
           name: "PAN Verification",
           endpoint: "/pan/verification",
           method: "POST",
+          details:
+            "This API verifies the provided PAN (Permanent Account Number) by checking it against government databases. It ensures that the PAN is valid and belongs to the person in question.",
           requestExample: {
             product_code: "API0001",
             trans_id: "BV576862_1234567890",
@@ -28,6 +30,8 @@ const apiFolders = {
           name: "PAN Comprehensive",
           endpoint: "/pan/comprehensive",
           method: "POST",
+          details:
+            "This API provides a comprehensive verification of the PAN, including additional details such as the PAN holder's full name, date of birth, address, and linkage to Aadhaar, if available.",
           requestExample: {
             product_code: "API0002",
             trans_id: "BV576862_1234567891",
@@ -74,6 +78,8 @@ const apiFolders = {
           name: "AADHAAR Generate Otp",
           endpoint: "/aadhaar/generate-otp",
           method: "POST",
+          details:
+            "This API generates an OTP (One-Time Password) sent to the mobile number linked with the provided Aadhaar number. The OTP is used for further Aadhaar verification processes.",
           requestExample: {
             product_code: "API0003",
             trans_id: "BV576862_1234567891",
@@ -92,6 +98,8 @@ const apiFolders = {
           name: "AADHAAR Validate Otp",
           endpoint: "/aadhaar/validate-otp",
           method: "POST",
+          details:
+            "This API validates the OTP sent to the Aadhaar-linked mobile number. Once the OTP is verified, it allows access to the Aadhaar details for further processing.",
           requestExample: {
             product_code: "API0004",
             trans_id: "BV576862_1234567892",
@@ -147,6 +155,8 @@ const apiFolders = {
           name: "AADHAAR Basic Verification",
           endpoint: "/aadhaar/verification",
           method: "POST",
+          details:
+            "This API verifies the Aadhaar number by checking its validity and provides basic demographic details such as age range, gender, and whether the mobile number is linked to Aadhaar.",
           requestExample: {
             product_code: "API0005",
             trans_id: "BV576862_1234567893",
@@ -175,6 +185,8 @@ const apiFolders = {
           name: "Bank Account",
           endpoint: "/bank/account",
           method: "POST",
+          details:
+            "This API verifies a bank account by matching the account number and IFSC code to ensure that the bank account is valid and belongs to the given holder.",
           requestExample: {
             product_code: "API0006",
             trans_id: "BV576862_1234567894",
@@ -193,6 +205,8 @@ const apiFolders = {
           name: "Bank Account Penny Drop",
           endpoint: "/bank/penny-drop",
           method: "POST",
+          details:
+            "This API performs a penny drop test by depositing a small amount into the bank account, verifying that the account is active and capable of receiving funds.",
           requestExample: {
             product_code: "API0007",
             trans_id: "BV576862_1234567895",
@@ -215,6 +229,8 @@ const apiFolders = {
           name: "Basic GST",
           endpoint: "/gst/basic",
           method: "POST",
+          details:
+            "This API provides basic verification of a GSTIN (Goods and Services Tax Identification Number), confirming the validity of the GSTIN and returning essential details like business name and registration date.",
           requestExample: {
             product_code: "API0006",
             trans_id: "BV576862_1234567894",
@@ -243,6 +259,8 @@ const apiFolders = {
           name: "Comprehensive GST",
           endpoint: "/gst/comprehensive",
           method: "POST",
+          details:
+            "This API provides detailed verification of a GSTIN, including business activities, invoicing status, and jurisdiction details, offering a comprehensive view of the GST profile.",
           requestExample: {
             product_code: "API0007",
             trans_id: "BV576862_1234567895",

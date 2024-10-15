@@ -13,6 +13,10 @@ const Sidebar = ({ setSelectedItem, folders }) => {
     }));
   };
 
+  const handleLinkClick = () => {
+    setSelectedItem(null);
+  };
+
   return (
     <div className="w-64 bg-gray-50 border-r border-gray-200 h-[100%] p-4 overflow-y-auto">
       <h2 className="text-lg font-semibold pl-1 mb-6 rounded-sm text-gray-800">
@@ -23,6 +27,7 @@ const Sidebar = ({ setSelectedItem, folders }) => {
         <li className="mb-4">
           <Link
             to="/introduction"
+            onClick={handleLinkClick}
             className="font-semibold text-[16px] text-[#696969] hover:underline hover:text-black"
           >
             Introduction
@@ -31,6 +36,7 @@ const Sidebar = ({ setSelectedItem, folders }) => {
         <li className="mb-4">
           <Link
             to="/getting-started"
+            onClick={handleLinkClick}
             className="font-semibold text-[16px] text-[#696969] hover:underline hover:text-black"
           >
             Getting Started
@@ -39,6 +45,7 @@ const Sidebar = ({ setSelectedItem, folders }) => {
         <li className="mb-4">
           <Link
             to="/endpoints"
+            onClick={handleLinkClick}
             className="font-semibold text-[16px] text-[#696969] hover:underline hover:text-black"
           >
             Endpoints
@@ -47,6 +54,7 @@ const Sidebar = ({ setSelectedItem, folders }) => {
         <li className="mb-4">
           <Link
             to="/authentication"
+            onClick={handleLinkClick}
             className="font-semibold text-[16px] text-[#696969] hover:underline hover:text-black"
           >
             Authentication
@@ -55,6 +63,7 @@ const Sidebar = ({ setSelectedItem, folders }) => {
         <li className="mb-4">
           <Link
             to="/errors-status-codes"
+            onClick={handleLinkClick}
             className="font-semibold text-[16px] text-[#696969] hover:underline hover:text-black"
           >
             Errors and Status Codes
