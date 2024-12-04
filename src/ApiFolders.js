@@ -6,7 +6,7 @@ const apiFolders = {
       subfolders: [
         {
           name: "PAN Verification",
-          endpoint: "/pan/1.0/verification",
+          endpoint: "/pan/1.0/pan-verification",
           method: "POST",
           details:
             "This API verifies the provided PAN (Permanent Account Number) by checking it against government databases. It ensures that the PAN is valid and belongs to the person in question.",
@@ -28,7 +28,7 @@ const apiFolders = {
         },
         {
           name: "PAN Comprehensive",
-          endpoint: "/pan/1.0/comprehensive",
+          endpoint: "/pan/1.0/pan-comprehensive",
           method: "POST",
           details:
             "This API provides a comprehensive verification of the PAN, including additional details such as the PAN holder's full name, date of birth, address, and linkage to Aadhaar, if available.",
@@ -75,8 +75,8 @@ const apiFolders = {
       name: "Aadhaar",
       subfolders: [
         {
-          name: "Generate Otp",
-          endpoint: "/aadhaar/1.0/generate-otp",
+          name: "Get Otp",
+          endpoint: "/aadhaar/1.0/get-otp",
           method: "POST",
           details:
             "This API generates an OTP (One-Time Password) sent to the mobile number linked with the provided Aadhaar number. The OTP is used for further Aadhaar verification processes.",
@@ -95,8 +95,8 @@ const apiFolders = {
           },
         },
         {
-          name: "Validate Otp",
-          endpoint: "/aadhaar/1.0/validate-otp",
+          name: "Submit Otp",
+          endpoint: "/aadhaar/1.0/submit-otp",
           method: "POST",
           details:
             "This API validates the OTP sent to the Aadhaar-linked mobile number. Once the OTP is verified, it allows access to the Aadhaar details for further processing.",
@@ -152,8 +152,8 @@ const apiFolders = {
           },
         },
         {
-          name: "Basic Verification",
-          endpoint: "/aadhaar/1.0/verification",
+          name: "Aadhaar Verification",
+          endpoint: "/aadhaar/1.0/verify-aadhaar",
           method: "POST",
           details:
             "This API verifies the Aadhaar number by checking its validity and provides basic demographic details such as age range, gender, and whether the mobile number is linked to Aadhaar.",
@@ -182,8 +182,8 @@ const apiFolders = {
       name: "Bank",
       subfolders: [
         {
-          name: "Bank Account",
-          endpoint: "/bank/1.0/account",
+          name: "Bank Account Penny Less",
+          endpoint: "/banking/1.0/bank-acc-verify-pennyless",
           method: "POST",
           details:
             "This API verifies a bank account by matching the account number and IFSC code to ensure that the bank account is valid and belongs to the given holder.",
@@ -203,7 +203,7 @@ const apiFolders = {
         },
         {
           name: "Bank Account Penny Drop",
-          endpoint: "/bank/1.0/penny-drop",
+          endpoint: "/banking/1.0/bank-acc-verify-pennydrop",
           method: "POST",
           details:
             "This API performs a penny drop test by depositing a small amount into the bank account, verifying that the account is active and capable of receiving funds.",
@@ -227,7 +227,7 @@ const apiFolders = {
       subfolders: [
         {
           name: "Basic GST",
-          endpoint: "/gst/1.0/basic",
+          endpoint: "/gst/1.0/basic-gst",
           method: "POST",
           details:
             "This API provides basic verification of a GSTIN (Goods and Services Tax Identification Number), confirming the validity of the GSTIN and returning essential details like business name and registration date.",
@@ -257,7 +257,7 @@ const apiFolders = {
         },
         {
           name: "GST With Filling",
-          endpoint: "/gst/1.0/comprehensive",
+          endpoint: "/gst/1.0/gst-with-filling",
           method: "POST",
           details:
             "This API provides detailed verification of a GSTIN, including business activities, invoicing status, and jurisdiction details, offering a comprehensive view of the GST profile.",
@@ -288,7 +288,7 @@ const apiFolders = {
         },
         {
           name: "Advance GST",
-          endpoint: "/gst/1.0/advance",
+          endpoint: "/gst/1.0/advance-gst",
           method: "POST",
           details:
             "The Advance GST API provides an in-depth analysis of a GSTIN, including historical data, business turnover, return filing status, and compliance rating. This allows for a comprehensive financial view of the business.",
@@ -326,7 +326,7 @@ const apiFolders = {
         },
         {
           name: "GST by PAN",
-          endpoint: "/gst/1.0/by-pan",
+          endpoint: "/gst/1.0/gst-by-pan",
           method: "POST",
           details:
             "The GST by PAN API allows verification of all GST registrations associated with a specific PAN. It returns multiple GSTINs linked to the PAN and their details, including business names, states, and registration status.",
